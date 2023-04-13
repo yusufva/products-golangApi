@@ -19,7 +19,7 @@ func NewUserPg(db *gorm.DB) user_repository.UserRepository {
 }
 
 func (u *userPG) CreateNewUser(user entity.User) errrs.MessageErr {
-	result := u.db.Create(user)
+	result := u.db.Create(&user)
 
 	if result.Error != nil {
 		return errrs.NewInternalServerError("something went wrong")

@@ -9,5 +9,5 @@ type ProductRepository interface {
 	CreateProduct(productPayload *entity.Product) (*entity.Product, errrs.MessageErr)
 	GetProductById(productId int) (*entity.Product, errrs.MessageErr)
 	UpdateProductById(payload entity.Product) errrs.MessageErr
-	GetAllProducts() ([]entity.Product, errrs.MessageErr)
+	GetAllProducts() ([]*entity.Product, errrs.MessageErr)
 }

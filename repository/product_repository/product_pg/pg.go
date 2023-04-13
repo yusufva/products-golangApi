@@ -3,12 +3,19 @@ package product_pg
 import (
 	"tugas-sesi12/entity"
 	"tugas-sesi12/pkg/errrs"
+	"tugas-sesi12/repository/product_repository"
 
 	"gorm.io/gorm"
 )
 
 type productPg struct {
 	db *gorm.DB
+}
+
+func NewProductPg(db *gorm.DB) product_repository.ProductRepository {
+	return &productPg{
+		db: db,
+	}
 }
 
 func (m *productPg) CreateProduct(productPayload *entity.Product) (*entity.Product, errrs.MessageErr) {
@@ -55,8 +62,8 @@ func (m *productPg) UpdateProductById(payload entity.Product) errrs.MessageErr {
 	return nil
 }
 
-func (m *productPg) GetAllProducts() ([]entity.Product, errrs.MessageErr) {
-	var products []entity.Product
+func (m *productPg) GetAllProducts() ([]*entity.Product, errrs.MessageErr) {
+	var products []*entity.Product
 
 	err := m.db.Find(&products).Error
 

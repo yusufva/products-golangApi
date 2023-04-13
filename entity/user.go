@@ -23,7 +23,7 @@ var invalidTokenErr = errrs.NewUnauthenticatedError("invalid token")
 type User struct {
 	Id         int       `gorm:"primaryKey;not null" json:"id"`
 	Email      string    `gorm:"unique;not null;type:varchar(255)" json:"email"`
-	Password   string    `gorm:"type:text[];not null" json:"password"`
+	Password   string    `gorm:"type:text;not null" json:"password"`
 	Level      userLevel `gorm:"not null;default:customer" json:"level"`
 	Created_At time.Time `json:"created_at"`
 	Updated_At time.Time `json:"updated_at"`
