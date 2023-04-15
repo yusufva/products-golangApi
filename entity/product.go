@@ -8,7 +8,7 @@ import (
 type Product struct {
 	Id          int       `gorm:"primaryKey;not null" json:"id"`
 	Title       string    `gorm:"not null;type:varchar(255)" json:"email"`
-	Description string    `gorm:"type:text[];not null" json:"description"`
+	Description string    `gorm:"type:text;not null" json:"description"`
 	UserId      int       `gorm:"foreignKey:UserId;not null;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"userId"`
 	Created_At  time.Time `gorm:"default:now()" json:"created_at"`
 	Updated_At  time.Time `gorm:"default:now()" json:"updated_at"`
