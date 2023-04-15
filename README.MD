@@ -16,9 +16,9 @@ Simple CRUD with multilevel Users, middleware, and authorization for Create and 
 * [JWT](https://jwt.io/)
 
 ### endpoints
-```POST /users/register```      => Register a new user 
-```POST /users/login```         => Login as registered user
-```GET /products/```            => Get all products based on user level
-```GET /products/:productId```  => Get product based on id with user level authorization
-```POST /products/```           => Creating New Product data
-```PUT /products/:productId```  => Update product based on id with user level authorization
+###### ```POST /users/register```      => Register a new user 
+###### ```POST /users/login```         => Login as registered user
+###### ```GET /products/```            => Get all products based on user level
+###### ```GET /products/:productId```  => Get product based on id with user level authorization
+###### ```POST /products/```           => Creating New Product data
+###### ```PUT /products/:productId```  => Update product based on id with user level authorization
