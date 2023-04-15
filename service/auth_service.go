@@ -3,6 +3,7 @@ package service
 import (
 	"tugas-sesi12/entity"
 	"tugas-sesi12/pkg/errrs"
+	"tugas-sesi12/pkg/helpers"
 	"tugas-sesi12/repository/product_repository"
 	"tugas-sesi12/repository/user_repository"
 
@@ -17,6 +18,46 @@ type AuthService interface {
 type authService struct {
 	userRepo    user_repository.UserRepository
 	productRepo product_repository.ProductRepository
+}
+
+func NewAuthService(userRepo user_repository.UserRepository, productRepo product_repository.ProductRepository) AuthService {
+	return &authService{
+		userRepo:    userRepo,
+		productRepo: productRepo,
+	}
+}
+
+func (a *authService) Authorization() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		user := c.MustGet("userData").(entity.User)
+
+		productId, err := helpers.GetParamsId(c, "productId")
+
+		if err != nil {
+			c.AbortWithStatusJSON(err.Status(), err)
+			return
+		}
+
+		product, err := a.productRepo.GetProductById(productId)
+
+		if err != nil {
+			c.AbortWithStatusJSON(err.Status(), err)
+			return
+		}
+
+		if user.Level == entity.Admin {
+			c.Next()
+			return
+		}
+
+		if product.UserId != user.Id {
+			unauthorizedErr := errrs.NewUnauthorizedError("you are not authorized to modify the movie data")
+			c.AbortWithStatusJSON(unauthorizedErr.Status(), unauthorizedErr)
+			return
+		}
+
+		c.Next()
+	}
 }
 
 func (a *authService) Authentication() gin.HandlerFunc {
