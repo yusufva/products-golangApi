@@ -39,12 +39,12 @@ func handleCreateRequiredTable() {
 		log.Panicln(err.Error())
 	}
 
-	alterConstraint :=
-		`
-	ALTER TABLE "public"."products" 
-		ADD CONSTRAINT "products_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
-	`
-	db.Exec(alterConstraint)
+	// alterConstraint :=
+	// 	`
+	// ALTER TABLE "public"."products"
+	// 	ADD CONSTRAINT "products_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
+	// `
+	// db.Exec(alterConstraint)
 
 }
 
