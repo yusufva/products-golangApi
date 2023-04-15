@@ -18,6 +18,12 @@ type userService struct {
 	userRepo user_repository.UserRepository
 }
 
+func NewUserService(userRepo user_repository.UserRepository) UserService {
+	return &userService{
+		userRepo: userRepo,
+	}
+}
+
 func (u *userService) CreateNewUser(payload dto.NewUserRequest) (*dto.NewUserResponse, errrs.MessageErr) {
 	err := helpers.ValidateStruct(payload)
 

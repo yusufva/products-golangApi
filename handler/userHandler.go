@@ -12,6 +12,12 @@ type userHandler struct {
 	userService service.UserService
 }
 
+func NewUserHandler(userService service.UserService) userHandler {
+	return userHandler{
+		userService: userService,
+	}
+}
+
 func (uh *userHandler) Register(c *gin.Context) {
 	var newUserRequest dto.NewUserRequest
 
