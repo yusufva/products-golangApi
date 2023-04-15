@@ -51,7 +51,7 @@ func (a *authService) Authorization() gin.HandlerFunc {
 		}
 
 		if product.UserId != user.Id {
-			unauthorizedErr := errrs.NewUnauthorizedError("you are not authorized to modify the movie data")
+			unauthorizedErr := errrs.NewUnauthorizedError("you are not authorized to modify the product data")
 			c.AbortWithStatusJSON(unauthorizedErr.Status(), unauthorizedErr)
 			return
 		}
