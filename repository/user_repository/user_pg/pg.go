@@ -32,7 +32,7 @@ func (u *userPG) GetUserById(userId int) (*entity.User, errrs.MessageErr) {
 }
 func (u *userPG) GetUserByEmail(userEmail string) (*entity.User, errrs.MessageErr) {
 	user := entity.User{Email: userEmail}
-	err := u.db.First(&user).Error
+	err := u.db.First(&user, "email = ?", user.Email).Error
 
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
