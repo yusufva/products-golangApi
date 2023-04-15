@@ -23,6 +23,8 @@ func StartApp() {
 	userService := service.NewUserService(userRepo)
 	userHandler := NewUserHandler(userService)
 
+	authService := service.NewAuthService(userRepo, productRepo)
+
 	route := gin.Default()
 
 	userRoute := route.Group("/users")
@@ -33,7 +35,9 @@ func StartApp() {
 
 	productRoute := route.Group("/products")
 	{
-		productRoute.POST("/", productHandler.CreateProduct)
+		productRoute.GET("/", authService.Authentication(), productHandler.GetAllProducts)
+		productRoute.POST("/", authService.Authentication(), productHandler.CreateProduct)
+		productRoute.PUT("/:productId", authService.Authentication(), authService.Authorization(), productHandler.UpdateProductById)
 	}
 
 	route.Run(":" + port)
