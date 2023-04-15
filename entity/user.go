@@ -73,14 +73,16 @@ func (u *User) ValidateToken(bearerToken string) errrs.MessageErr {
 	if !isBearer {
 		return invalidTokenErr
 	}
+	//"Bearer aksdnvokaenovkbnk.kdnvaokn.okanvoknv"
 
+	//[]string{"Bearer", "aksdnvokaenovkbnk.kdnvaokn.okanvoknv"}
 	splitToken := strings.Split(bearerToken, " ")
 
 	if len(splitToken) != 2 {
 		return invalidTokenErr
 	}
 
-	tokenString := splitToken[2]
+	tokenString := splitToken[1]
 
 	token, err := u.parseToken(tokenString)
 
@@ -97,6 +99,7 @@ func (u *User) ValidateToken(bearerToken string) errrs.MessageErr {
 	}
 
 	err = u.bindTokenToUserEntity(mapClaims)
+
 	return err
 }
 
