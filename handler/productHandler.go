@@ -21,6 +21,24 @@ func NewProductHandler(productService service.ProductService) productHandler {
 	}
 }
 
+func (p productHandler) GetProductById(c *gin.Context) {
+	productId, err := helpers.GetParamsId(c, "productId")
+
+	if err != nil {
+		c.AbortWithStatusJSON(err.Status(), err)
+		return
+	}
+
+	response, err := p.productService.GetProductById(productId)
+
+	if err != nil {
+		c.AbortWithStatusJSON(err.Status(), err)
+		return
+	}
+
+	c.JSON(http.StatusOK, &response)
+}
+
 func (p productHandler) GetAllProducts(c *gin.Context) {
 	// products := []entity.Product{}
 

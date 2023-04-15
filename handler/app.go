@@ -36,6 +36,7 @@ func StartApp() {
 	productRoute := route.Group("/products")
 	{
 		productRoute.GET("/", authService.Authentication(), productHandler.GetAllProducts)
+		productRoute.GET("/:productId", authService.Authentication(), authService.Authorization(), productHandler.GetProductById)
 		productRoute.POST("/", authService.Authentication(), productHandler.CreateProduct)
 		productRoute.PUT("/:productId", authService.Authentication(), authService.Authorization(), productHandler.UpdateProductById)
 	}
