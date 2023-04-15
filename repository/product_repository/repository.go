@@ -10,4 +10,5 @@ type ProductRepository interface {
 	GetProductById(productId int) (*entity.Product, errrs.MessageErr)
 	UpdateProductById(payload entity.Product) errrs.MessageErr
 	GetAllProducts() ([]*entity.Product, errrs.MessageErr)
+	GetAllProductsByUser(userId int) ([]*entity.Product, errrs.MessageErr)
 }

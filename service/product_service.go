@@ -14,6 +14,7 @@ type ProductService interface {
 	UpdateProductById(productId int, productRequest dto.NewProductRequest) (*dto.NewProductResponse, errrs.MessageErr)
 	GetProductById(productId int) (*dto.ProductResponse, errrs.MessageErr)
 	GetAllProducts() (*dto.GetProductsResponse, errrs.MessageErr)
+	GetAllProductsByUser(userId int) (*dto.GetProductsResponse, errrs.MessageErr)
 }
 
 type productService struct {
@@ -30,7 +31,7 @@ func (p *productService) CreateProduct(userId int, payload dto.NewProductRequest
 	productRequest := &entity.Product{
 		Title:       payload.Title,
 		Description: payload.Description,
-		UserId:      payload.UserId,
+		UserId:      userId,
 	}
 
 	_, err := p.productRepo.CreateProduct(productRequest)
@@ -59,6 +60,7 @@ func (p *productService) UpdateProductById(productId int, productRequest dto.New
 		Id:          productId,
 		Title:       productRequest.Title,
 		Description: productRequest.Description,
+		UserId:      productRequest.UserId,
 	}
 
 	err = p.productRepo.UpdateProductById(payload)
@@ -90,6 +92,29 @@ func (p *productService) GetProductById(productId int) (*dto.ProductResponse, er
 
 func (p *productService) GetAllProducts() (*dto.GetProductsResponse, errrs.MessageErr) {
 	products, err := p.productRepo.GetAllProducts()
+
+	if err != nil {
+		return nil, err
+	}
+
+	productResponse := []dto.ProductResponse{}
+
+	for _, eachProduct := range products {
+		productResponse = append(productResponse, eachProduct.EntityToProductResponseDto())
+	}
+
+	response := dto.GetProductsResponse{
+		Result:     "success",
+		StatusCode: http.StatusOK,
+		Message:    "product data have been sent successfully",
+		Data:       productResponse,
+	}
+
+	return &response, nil
+}
+
+func (p *productService) GetAllProductsByUser(userId int) (*dto.GetProductsResponse, errrs.MessageErr) {
+	products, err := p.productRepo.GetAllProductsByUser(userId)
 
 	if err != nil {
 		return nil, err
