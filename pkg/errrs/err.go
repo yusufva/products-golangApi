@@ -26,6 +26,14 @@ func (e *MessageErrData) Error() string {
 	return e.ErrError
 }
 
+func NewConflictError(message string) MessageErr {
+	return &MessageErrData{
+		ErrMessage: message,
+		ErrStatus:  http.StatusConflict,
+		ErrError:   "CONFLICT",
+	}
+}
+
 func NewUnauthorizedError(message string) MessageErr {
 	return &MessageErrData{
 		ErrMessage: message,
